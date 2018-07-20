@@ -20,13 +20,32 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        getCurrentPosition()
+        getCrewInfo()
+    }
+    
+    private func getCurrentPosition() {
         RequestManager.getIssPositionData { (position) in
             self.issPosition = position
+            self.refreshView()
         }
-        
+    }
+    
+    private func getCrewInfo() {
         RequestManager.getIssCrewData { (crew) in
             self.issCrew = crew
         }
+    }
+
+    private func refreshView() {
+        guard let issPosition = issPosition else { return }
+        
+        lastTimeLabel.text = Helper.getDateFromTimestamp(issPosition.timestamp)
+        print(issPosition.position.latitude)
+        print(issPosition.position.longitude)
+        
+        let position = String(format: "latitude: %@ / longitude: %@", issPosition.position.latitude, issPosition.position.longitude)
+        lastPositionLabel.text = position
     }
 }
 

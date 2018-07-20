@@ -16,6 +16,7 @@
 		6B7FEE312101E8930019E9C7 /* IssPosition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B7FEE302101E8930019E9C7 /* IssPosition.swift */; };
 		6B7FEE332101EA2A0019E9C7 /* Crew.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B7FEE322101EA2A0019E9C7 /* Crew.swift */; };
 		6B7FEE362101EA9D0019E9C7 /* RequestManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B7FEE352101EA9D0019E9C7 /* RequestManager.swift */; };
+		6B7FEE3A210201000019E9C7 /* Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B7FEE39210201000019E9C7 /* Helper.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -31,6 +32,7 @@
 		6B7FEE302101E8930019E9C7 /* IssPosition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssPosition.swift; sourceTree = "<group>"; };
 		6B7FEE322101EA2A0019E9C7 /* Crew.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Crew.swift; sourceTree = "<group>"; };
 		6B7FEE352101EA9D0019E9C7 /* RequestManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestManager.swift; sourceTree = "<group>"; };
+		6B7FEE39210201000019E9C7 /* Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helper.swift; sourceTree = "<group>"; };
 		71236730062AFD43B8EFEF0A /* Pods_ISS_Location.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ISS_Location.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -73,6 +75,7 @@
 				6B7FEE2C2101E66C0019E9C7 /* View */,
 				6B7FEE2D2101E6770019E9C7 /* Controller */,
 				6B7FEE342101EA780019E9C7 /* Managers */,
+				6B7FEE38210200D40019E9C7 /* Helpers */,
 				6B7FEE2F2101E6C60019E9C7 /* Other */,
 			);
 			path = "ISS Location";
@@ -118,6 +121,14 @@
 				6B7FEE352101EA9D0019E9C7 /* RequestManager.swift */,
 			);
 			path = Managers;
+			sourceTree = "<group>";
+		};
+		6B7FEE38210200D40019E9C7 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				6B7FEE39210201000019E9C7 /* Helper.swift */,
+			);
+			path = Helpers;
 			sourceTree = "<group>";
 		};
 		A59DA0456838E833844CC3ED /* Pods */ = {
@@ -260,6 +271,7 @@
 				6B5C03312101CF3300502AD6 /* AppDelegate.swift in Sources */,
 				6B7FEE332101EA2A0019E9C7 /* Crew.swift in Sources */,
 				6B7FEE312101E8930019E9C7 /* IssPosition.swift in Sources */,
+				6B7FEE3A210201000019E9C7 /* Helper.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
