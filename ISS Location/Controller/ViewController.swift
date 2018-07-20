@@ -11,6 +11,7 @@ import Mapbox
 
 class ViewController: UIViewController {
     
+    @IBOutlet weak var mapView: MGLMapView!
     @IBOutlet weak var lastTimeLabel: UILabel!
     @IBOutlet weak var lastPositionLabel: UILabel!
     
@@ -18,6 +19,7 @@ class ViewController: UIViewController {
     private var issCrew: [CrewMan] = []
     
     private let timeInterval: Double = 5.0
+    
     
     // MARK: - Life cycle methods
     
@@ -32,6 +34,7 @@ class ViewController: UIViewController {
         super.viewDidAppear(animated)
         setupTimer()
     }
+    
     
     // MARK: - API data methods
     
@@ -48,10 +51,13 @@ class ViewController: UIViewController {
         }
     }
     
+    
     // MARK: - View refreshing methods
 
     private func refreshView() {
         guard let issPosition = issPosition else { return }
+        
+        centerMap()
         
         lastTimeLabel.text = Helper.getDateFromTimestamp(issPosition.timestamp)
         
@@ -59,10 +65,30 @@ class ViewController: UIViewController {
         lastPositionLabel.text = position
     }
     
+    
     // MARK: - Timer methods
+    
     private func setupTimer() {
         Timer.scheduledTimer(withTimeInterval: timeInterval, repeats: true, block: { [weak self] _ in
             self?.getCurrentPosition()
         })
+    }
+    
+    
+    // MARK: - Map methods
+    
+    private func centerMap() {
+        guard
+            let issPosition = issPosition,
+            let latitude  = Double(issPosition.position.latitude),
+            let longitude = Double(issPosition.position.longitude)
+        else { return }
+        
+        let position = CLLocationCoordinate2DMake(latitude, longitude)
+        mapView.setCenter(position, animated: true)
+    }
+    
+    private func addMarkerToMap() {
+        
     }
 }

@@ -102,6 +102,7 @@
                     <connections>
                         <outlet property="lastPositionLabel" destination="5yT-dE-q2T" id="n4f-53-wyr"/>
                         <outlet property="lastTimeLabel" destination="TPm-8o-zPM" id="raX-Je-GXo"/>
+                        <outlet property="mapView" destination="5x3-Zw-zkv" id="OQq-UI-Ihw"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
