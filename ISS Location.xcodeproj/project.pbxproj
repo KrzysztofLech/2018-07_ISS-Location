@@ -62,13 +62,45 @@
 			isa = PBXGroup;
 			children = (
 				6B5C03302101CF3300502AD6 /* AppDelegate.swift */,
-				6B5C03322101CF3300502AD6 /* ViewController.swift */,
-				6B5C03342101CF3300502AD6 /* Main.storyboard */,
-				6B5C03372101CF3400502AD6 /* Assets.xcassets */,
-				6B5C03392101CF3400502AD6 /* LaunchScreen.storyboard */,
 				6B5C033C2101CF3400502AD6 /* Info.plist */,
+				6B7FEE2B2101E6500019E9C7 /* Model */,
+				6B7FEE2C2101E66C0019E9C7 /* View */,
+				6B7FEE2D2101E6770019E9C7 /* Controller */,
+				6B7FEE2F2101E6C60019E9C7 /* Other */,
 			);
 			path = "ISS Location";
+			sourceTree = "<group>";
+		};
+		6B7FEE2B2101E6500019E9C7 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		6B7FEE2C2101E66C0019E9C7 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				6B5C03342101CF3300502AD6 /* Main.storyboard */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		6B7FEE2D2101E6770019E9C7 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				6B5C03322101CF3300502AD6 /* ViewController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		6B7FEE2F2101E6C60019E9C7 /* Other */ = {
+			isa = PBXGroup;
+			children = (
+				6B5C03372101CF3400502AD6 /* Assets.xcassets */,
+				6B5C03392101CF3400502AD6 /* LaunchScreen.storyboard */,
+			);
+			path = Other;
 			sourceTree = "<group>";
 		};
 		A59DA0456838E833844CC3ED /* Pods */ = {
@@ -355,7 +387,10 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 2UGBQYC9Y9;
 				INFOPLIST_FILE = "ISS Location/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "kl.24abc.pl.ISS-Location";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
@@ -371,7 +406,10 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 2UGBQYC9Y9;
 				INFOPLIST_FILE = "ISS Location/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "kl.24abc.pl.ISS-Location";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
