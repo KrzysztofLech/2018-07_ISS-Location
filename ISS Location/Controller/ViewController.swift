@@ -15,9 +15,6 @@ class ViewController: UIViewController {
     @IBOutlet weak var lastTimeLabel: UILabel!
     @IBOutlet weak var lastPositionLabel: UILabel!
     
-    private var issPosition: IssPosition?
-    private var issCrew: [CrewMan] = []
-    
     private let timeInterval: Double = 5.0
     private var mapPointAnnotation: MGLPointAnnotation!
     
@@ -26,47 +23,30 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        getCurrentPosition()
-        getCrewInfo()
+
+        DataManager.shared.loadSavedIssPosition {
+            self.addPointAnnotationToMap()
+            self.refreshView()
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        addPointAnnotationToMap()
+        getCurrentPosition()
+        
+        DataManager.shared.getIssCrew()
         setupTimer()
     }
-    
-    
-    // MARK: - API data methods
-    
-    private func getCurrentPosition() {
-        RequestManager.getIssPositionData { (position) in
-            self.issPosition = position
-            self.refreshView()
-        }
-    }
-    
-    private func getCrewInfo() {
-        RequestManager.getIssCrewData { (crew) in
-            self.issCrew = crew
-        }
-    }
-    
     
     // MARK: - View refreshing methods
 
     private func refreshView() {
-        guard let issPosition = issPosition else { return }
+        lastTimeLabel.text = DataManager.shared.getLastISSPositionTime()
+        lastPositionLabel.text = DataManager.shared.getLastISSPositionCoordinateString()
         
         centerMap()
         changeAnnotationPointPosition()
-        
-        lastTimeLabel.text = Helper.getDateFromTimestamp(issPosition.timestamp)
-        
-        let position = String(format: "latitude: %@ / longitude: %@", issPosition.position.latitude, issPosition.position.longitude)
-        lastPositionLabel.text = position
     }
     
     
@@ -78,29 +58,23 @@ class ViewController: UIViewController {
         })
     }
     
+    private func getCurrentPosition() {
+        DataManager.shared.getCurrentIssPosition {
+            DispatchQueue.main.async {
+                self.refreshView()
+            }
+        }
+    }
     
     // MARK: - Map methods
     
-    private func getPositionCoordinate() -> CLLocationCoordinate2D? {
-        guard
-            let issPosition = issPosition,
-            let latitude  = Double(issPosition.position.latitude),
-            let longitude = Double(issPosition.position.longitude)
-            else {
-                return CLLocationCoordinate2DMake(0, 0)
-                //return nil
-            }
-
-        return CLLocationCoordinate2DMake(latitude, longitude)
-    }
-    
     private func centerMap() {
-        guard let coordinate = getPositionCoordinate() else { return }
+        guard let coordinate = DataManager.shared.getLastISSPositionCoordinate() else { return }
         mapView.setCenter(coordinate, animated: true)
     }
     
     private func addPointAnnotationToMap() {
-        guard let coordinate = getPositionCoordinate() else { return }
+        guard let coordinate = DataManager.shared.getLastISSPositionCoordinate() else { return }
         
         mapPointAnnotation = MGLPointAnnotation()
         mapPointAnnotation.coordinate = coordinate
@@ -109,8 +83,13 @@ class ViewController: UIViewController {
     }
     
     private func changeAnnotationPointPosition() {
-        guard let coordinate = getPositionCoordinate() else { return }
+        if mapPointAnnotation == nil {
+            addPointAnnotationToMap()
+        }
         
+        guard
+            let mapPointAnnotation = mapPointAnnotation,
+            let coordinate = DataManager.shared.getLastISSPositionCoordinate() else { return }
         mapPointAnnotation.coordinate = coordinate
     }
 }
