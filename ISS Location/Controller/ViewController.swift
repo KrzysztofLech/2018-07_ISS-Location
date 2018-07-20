@@ -19,6 +19,7 @@ class ViewController: UIViewController {
     private var issCrew: [CrewMan] = []
     
     private let timeInterval: Double = 5.0
+    private var mapPointAnnotation: MGLPointAnnotation!
     
     
     // MARK: - Life cycle methods
@@ -32,6 +33,8 @@ class ViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        
+        addPointAnnotationToMap()
         setupTimer()
     }
     
@@ -58,6 +61,7 @@ class ViewController: UIViewController {
         guard let issPosition = issPosition else { return }
         
         centerMap()
+        changeAnnotationPointPosition()
         
         lastTimeLabel.text = Helper.getDateFromTimestamp(issPosition.timestamp)
         
@@ -77,18 +81,36 @@ class ViewController: UIViewController {
     
     // MARK: - Map methods
     
-    private func centerMap() {
+    private func getPositionCoordinate() -> CLLocationCoordinate2D? {
         guard
             let issPosition = issPosition,
             let latitude  = Double(issPosition.position.latitude),
             let longitude = Double(issPosition.position.longitude)
-        else { return }
-        
-        let position = CLLocationCoordinate2DMake(latitude, longitude)
-        mapView.setCenter(position, animated: true)
+            else {
+                return CLLocationCoordinate2DMake(0, 0)
+                //return nil
+            }
+
+        return CLLocationCoordinate2DMake(latitude, longitude)
     }
     
-    private func addMarkerToMap() {
+    private func centerMap() {
+        guard let coordinate = getPositionCoordinate() else { return }
+        mapView.setCenter(coordinate, animated: true)
+    }
+    
+    private func addPointAnnotationToMap() {
+        guard let coordinate = getPositionCoordinate() else { return }
         
+        mapPointAnnotation = MGLPointAnnotation()
+        mapPointAnnotation.coordinate = coordinate
+        mapPointAnnotation.title = "ISS"
+        mapView.addAnnotation(mapPointAnnotation)
+    }
+    
+    private func changeAnnotationPointPosition() {
+        guard let coordinate = getPositionCoordinate() else { return }
+        
+        mapPointAnnotation.coordinate = coordinate
     }
 }
