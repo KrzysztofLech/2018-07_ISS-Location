@@ -28,6 +28,8 @@ class ViewController: UIViewController {
             self.addPointAnnotationToMap()
             self.refreshView()
         }
+        
+        mapView.delegate = self
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -78,7 +80,7 @@ class ViewController: UIViewController {
         
         mapPointAnnotation = MGLPointAnnotation()
         mapPointAnnotation.coordinate = coordinate
-        mapPointAnnotation.title = "ISS"
+        mapPointAnnotation.title = "ISS Crew"
         mapView.addAnnotation(mapPointAnnotation)
     }
     
@@ -91,5 +93,13 @@ class ViewController: UIViewController {
             let mapPointAnnotation = mapPointAnnotation,
             let coordinate = DataManager.shared.getLastISSPositionCoordinate() else { return }
         mapPointAnnotation.coordinate = coordinate
+    }
+}
+
+extension ViewController: MGLMapViewDelegate {
+    
+    func mapView(_ mapView: MGLMapView, annotationCanShowCallout annotation: MGLAnnotation) -> Bool {
+        mapPointAnnotation.subtitle = DataManager.shared.getIssCrewString()
+        return true
     }
 }

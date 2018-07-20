@@ -6,6 +6,7 @@
 //  Copyright © 2018 Krzysztof Lech. All rights reserved.
 //
 
+import UIKit
 import CoreLocation
 
 class DataManager {
@@ -66,5 +67,11 @@ class DataManager {
         RequestManager.getIssCrewData { (crewArray) in
             self.issCrew = crewArray
         }
+    }
+    
+    func getIssCrewString() -> String {
+        let array = issCrew.map { $0.name }
+        let crew = array.joined(separator: ", ")
+        return crew
     }
 }
