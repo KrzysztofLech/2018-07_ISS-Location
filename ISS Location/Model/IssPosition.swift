@@ -9,8 +9,8 @@
 import Foundation
 
 struct IssPosition: Decodable {
-    var position: Position
-    var timestamp:   Int
+    let position:  Position
+    let timestamp: Int
     
     enum CodingKeys: String, CodingKey {
         case position = "iss_position"
@@ -19,6 +19,6 @@ struct IssPosition: Decodable {
 }
 
 struct Position: Decodable {
-    var latitude:  String
-    var longitude: String
+    let latitude:  String
+    let longitude: String
 }

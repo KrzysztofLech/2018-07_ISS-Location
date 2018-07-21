@@ -9,5 +9,5 @@
 import Foundation
 
 struct CrewMan {
-    var name: String
+    let name: String
 }
