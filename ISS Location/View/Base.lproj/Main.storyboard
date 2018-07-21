@@ -46,6 +46,8 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                         </subviews>
+                                        <variation key="heightClass=compact-widthClass=compact" axis="horizontal"/>
+                                        <variation key="heightClass=compact-widthClass=regular" axis="horizontal"/>
                                     </stackView>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -73,6 +75,8 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                         </subviews>
+                                        <variation key="heightClass=compact-widthClass=compact" axis="horizontal"/>
+                                        <variation key="heightClass=compact-widthClass=regular" axis="horizontal"/>
                                     </stackView>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -90,12 +94,18 @@
                             <constraint firstItem="0NO-2K-4Gc" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="KsN-zX-DnQ"/>
                             <constraint firstItem="14m-8i-bed" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="Tet-ti-Jku"/>
                             <constraint firstItem="14m-8i-bed" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="fW5-Qv-VmS"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="5x3-Zw-zkv" secondAttribute="bottom" constant="100" id="fcw-gp-cpZ"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="5x3-Zw-zkv" secondAttribute="bottom" constant="100" id="fcw-gp-cpZ">
+                                <variation key="heightClass=compact-widthClass=compact" constant="50"/>
+                                <variation key="heightClass=compact-widthClass=regular" constant="50"/>
+                            </constraint>
                             <constraint firstItem="0NO-2K-4Gc" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="iWW-g0-8QJ"/>
                             <constraint firstAttribute="bottom" secondItem="0NO-2K-4Gc" secondAttribute="bottom" id="mmE-G8-iYZ"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="5x3-Zw-zkv" secondAttribute="trailing" id="ohb-DQ-RET"/>
                             <constraint firstItem="5x3-Zw-zkv" firstAttribute="top" secondItem="14m-8i-bed" secondAttribute="bottom" id="qC9-Vl-rWQ"/>
-                            <constraint firstItem="5x3-Zw-zkv" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="100" id="xYM-Z1-R5b"/>
+                            <constraint firstItem="5x3-Zw-zkv" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="100" id="xYM-Z1-R5b">
+                                <variation key="heightClass=compact-widthClass=compact" constant="50"/>
+                                <variation key="heightClass=compact-widthClass=regular" constant="50"/>
+                            </constraint>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
