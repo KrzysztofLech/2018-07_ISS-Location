@@ -33,19 +33,12 @@ class DataManager {
         UserDefaultsManager.shared.issPosition = newIssPosition
     }
     
-    func loadSavedIssPosition(completion: (()->())) {
-        if let loadedPosition = UserDefaultsManager.shared.issPosition {
-            self.issPosition = loadedPosition
-            completion()
-        }
-    }
-    
-    func getLastISSPositionCoordinate() -> CLLocationCoordinate2D? {
+    func getLastISSPositionCoordinate() -> CLLocationCoordinate2D {
         guard
             let issPosition = issPosition,
             let latitude  = Double(issPosition.position.latitude),
             let longitude = Double(issPosition.position.longitude)
-        else { return nil }
+        else { return CLLocationCoordinate2DMake(0, 0) }
         
         return CLLocationCoordinate2DMake(latitude, longitude)
     }

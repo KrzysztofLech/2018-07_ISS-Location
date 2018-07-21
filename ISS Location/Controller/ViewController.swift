@@ -15,8 +15,17 @@ class ViewController: UIViewController {
     @IBOutlet weak var lastTimeLabel: UILabel!
     @IBOutlet weak var lastPositionLabel: UILabel!
     
+    
+    // MARK: - Properties
+    
     private let timeInterval: Double = 5.0
-    private var mapPointAnnotation: MGLPointAnnotation!
+    lazy private var mapAnnotationPoint: MGLPointAnnotation = {
+        let annotation = MGLPointAnnotation()
+        annotation.coordinate = DataManager.shared.getLastISSPositionCoordinate()
+        annotation.title = "ISS Crew"
+        return annotation
+    }()
+    private var isAnnotationPointVisible = false
     
     
     // MARK: - Life cycle methods
@@ -24,31 +33,29 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        DataManager.shared.loadSavedIssPosition {
-            self.addPointAnnotationToMap()
-            self.refreshView()
-        }
-        
         mapView.delegate = self
     }
+    
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        setLabelsColorActive(false)
+        
+        if DataManager.shared.issPosition == nil {
+            getCurrentPosition()
+        } else {
+            refreshView()
+            getCurrentPosition()
+        }
+    }
+    
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        getCurrentPosition()
-        
         DataManager.shared.getIssCrew()
         setupTimer()
-    }
-    
-    // MARK: - View refreshing methods
-
-    private func refreshView() {
-        lastTimeLabel.text = DataManager.shared.getLastISSPositionTime()
-        lastPositionLabel.text = DataManager.shared.getLastISSPositionCoordinateString()
-        
-        centerMap()
-        changeAnnotationPointPosition()
     }
     
     
@@ -63,43 +70,54 @@ class ViewController: UIViewController {
     private func getCurrentPosition() {
         DataManager.shared.getCurrentIssPosition {
             DispatchQueue.main.async {
+                self.setLabelsColorActive(true)
                 self.refreshView()
             }
         }
     }
     
-    // MARK: - Map methods
     
-    private func centerMap() {
-        guard let coordinate = DataManager.shared.getLastISSPositionCoordinate() else { return }
-        mapView.setCenter(coordinate, animated: true)
+    // MARK: - View refreshing methods
+    
+    private func setLabelsColorActive(_ active: Bool) {
+        lastTimeLabel.alpha     = active ? 1.0 : 0.3
+        lastPositionLabel.alpha = active ? 1.0 : 0.3
     }
     
-    private func addPointAnnotationToMap() {
-        guard let coordinate = DataManager.shared.getLastISSPositionCoordinate() else { return }
+    private func refreshView() {
+        lastTimeLabel.text = DataManager.shared.getLastISSPositionTime()
+        lastPositionLabel.text = DataManager.shared.getLastISSPositionCoordinateString()
         
-        mapPointAnnotation = MGLPointAnnotation()
-        mapPointAnnotation.coordinate = coordinate
-        mapPointAnnotation.title = "ISS Crew"
-        mapView.addAnnotation(mapPointAnnotation)
+        centerMap()
+        changeAnnotationPointPosition()
+    }
+    
+    
+    // MARK: - Map methods
+    
+    private func centerMap(withAnimation: Bool = true) {
+        let coordinate = DataManager.shared.getLastISSPositionCoordinate()
+        mapView.setCenter(coordinate, animated: withAnimation)
     }
     
     private func changeAnnotationPointPosition() {
-        if mapPointAnnotation == nil {
-            addPointAnnotationToMap()
-        }
-        
-        guard
-            let mapPointAnnotation = mapPointAnnotation,
-            let coordinate = DataManager.shared.getLastISSPositionCoordinate() else { return }
-        mapPointAnnotation.coordinate = coordinate
+        mapAnnotationPoint.coordinate = DataManager.shared.getLastISSPositionCoordinate()
+        if !isAnnotationPointVisible { addAnnotationPointToMap() }
+    }
+    
+    private func addAnnotationPointToMap() {
+        mapView.addAnnotation(mapAnnotationPoint)
+        isAnnotationPointVisible = true
     }
 }
+
+
+// MARK: - Map delegate methods
 
 extension ViewController: MGLMapViewDelegate {
     
     func mapView(_ mapView: MGLMapView, annotationCanShowCallout annotation: MGLAnnotation) -> Bool {
-        mapPointAnnotation.subtitle = DataManager.shared.getIssCrewString()
+        mapAnnotationPoint.subtitle = DataManager.shared.getIssCrewString()
         return true
     }
 }
