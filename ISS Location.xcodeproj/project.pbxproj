@@ -19,6 +19,7 @@
 		6B7FEE3A210201000019E9C7 /* Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B7FEE39210201000019E9C7 /* Helper.swift */; };
 		6BB484EF21022F6C00D32C76 /* UserDefaultsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BB484EE21022F6C00D32C76 /* UserDefaultsManager.swift */; };
 		6BB484F1210266B100D32C76 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BB484F0210266B100D32C76 /* DataManager.swift */; };
+		6BB484F321035E3900D32C76 /* MapAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BB484F221035E3900D32C76 /* MapAnnotationView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -37,6 +38,7 @@
 		6B7FEE39210201000019E9C7 /* Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helper.swift; sourceTree = "<group>"; };
 		6BB484EE21022F6C00D32C76 /* UserDefaultsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsManager.swift; sourceTree = "<group>"; };
 		6BB484F0210266B100D32C76 /* DataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
+		6BB484F221035E3900D32C76 /* MapAnnotationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapAnnotationView.swift; sourceTree = "<group>"; };
 		71236730062AFD43B8EFEF0A /* Pods_ISS_Location.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ISS_Location.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -133,6 +135,7 @@
 			isa = PBXGroup;
 			children = (
 				6B7FEE39210201000019E9C7 /* Helper.swift */,
+				6BB484F221035E3900D32C76 /* MapAnnotationView.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -274,6 +277,7 @@
 			files = (
 				6B7FEE362101EA9D0019E9C7 /* RequestManager.swift in Sources */,
 				6BB484F1210266B100D32C76 /* DataManager.swift in Sources */,
+				6BB484F321035E3900D32C76 /* MapAnnotationView.swift in Sources */,
 				6B5C03332101CF3300502AD6 /* ViewController.swift in Sources */,
 				6B5C03312101CF3300502AD6 /* AppDelegate.swift in Sources */,
 				6BB484EF21022F6C00D32C76 /* UserDefaultsManager.swift in Sources */,

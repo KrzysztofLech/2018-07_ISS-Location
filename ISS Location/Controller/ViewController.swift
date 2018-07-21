@@ -120,4 +120,8 @@ extension ViewController: MGLMapViewDelegate {
         mapAnnotationPoint.subtitle = DataManager.shared.getIssCrewString()
         return true
     }
+    
+    func mapView(_ mapView: MGLMapView, viewFor annotation: MGLAnnotation) -> MGLAnnotationView? {
+        return MapAnnotationView(reuseIdentifier: "ISSicon")
+    }
 }
