@@ -19,7 +19,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     private func loadLastSessionPosition() {
-        DataManager.shared.issPosition = UserDefaultsManager.shared.issPosition
+        _ = UserDefaultsService.shared.issPosition
     }
 }
 

@@ -1,5 +1,5 @@
 //
-//  Crew.swift
+//  CrewMan.swift
 //  ISS Location
 //
 //  Created by Krzysztof Lech on 20.07.2018.

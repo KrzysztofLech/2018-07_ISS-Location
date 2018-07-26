@@ -7,42 +7,33 @@
 //
 
 import UIKit
-import Mapbox
+
+let positionRefreshingTimeInterval: Double = 5.0
 
 class ViewController: UIViewController {
     
-    @IBOutlet weak var mapView: MGLMapView!
-    @IBOutlet weak var lastTimeLabel: UILabel!
-    @IBOutlet weak var lastPositionLabel: UILabel!
+    @IBOutlet weak var timeView: InformationView!
+    @IBOutlet weak var positionView: InformationView!
+    @IBOutlet weak var mapView: MapView!
     
-    
-    // MARK: - Properties
-    
-    private let timeInterval: Double = 5.0
-    lazy private var mapAnnotationPoint: MGLPointAnnotation = {
-        let annotation = MGLPointAnnotation()
-        annotation.coordinate = DataManager.shared.getLastISSPositionCoordinate()
-        annotation.title = "ISS Crew"
-        return annotation
+    lazy var viewModel: ViewModel = {
+        return ViewModel()
     }()
-    private var isAnnotationPointVisible = false
-    
+
     
     // MARK: - Life cycle methods
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        mapView.delegate = self
+        
+        initView()
+        initViewModel()
     }
-    
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        setLabelsColorActive(false)
-        
-        if DataManager.shared.issPosition == nil {
+        if viewModel.issPosition == nil {
             getCurrentPosition()
         } else {
             refreshView()
@@ -50,78 +41,50 @@ class ViewController: UIViewController {
         }
     }
     
-    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        DataManager.shared.getIssCrew()
+        viewModel.getIssCrew {
+            self.mapView.crewString = self.viewModel.issCrewString
+        }
         setupTimer()
+    }
+    
+    private func initView() {
+        setInformationLabelsActive(false)
+    }
+    
+    private func initViewModel() {
+        viewModel.getLastSessionSavedPosition()
     }
     
     
     // MARK: - Timer methods
     
     private func setupTimer() {
-        Timer.scheduledTimer(withTimeInterval: timeInterval, repeats: true, block: { [weak self] _ in
+        Timer.scheduledTimer(withTimeInterval: positionRefreshingTimeInterval, repeats: true, block: { [weak self] _ in
             self?.getCurrentPosition()
         })
     }
     
     private func getCurrentPosition() {
-        DataManager.shared.getCurrentIssPosition {
-            DispatchQueue.main.async {
-                self.setLabelsColorActive(true)
-                self.refreshView()
-            }
+        viewModel.getCurrentIssPosition { [weak self] in
+            self?.setInformationLabelsActive(true)
+            self?.refreshView()
         }
     }
     
     
-    // MARK: - View refreshing methods
+    // MARK: - View methods
     
-    private func setLabelsColorActive(_ active: Bool) {
-        lastTimeLabel.alpha     = active ? 1.0 : 0.3
-        lastPositionLabel.alpha = active ? 1.0 : 0.3
+    private func setInformationLabelsActive(_ active: Bool) {
+        timeView.currentData = active
+        positionView.currentData = active
     }
     
     private func refreshView() {
-        lastTimeLabel.text = DataManager.shared.getLastISSPositionTime()
-        lastPositionLabel.text = DataManager.shared.getLastISSPositionCoordinateString()
-        
-        centerMap()
-        changeAnnotationPointPosition()
-    }
-    
-    
-    // MARK: - Map methods
-    
-    private func centerMap(withAnimation: Bool = true) {
-        let coordinate = DataManager.shared.getLastISSPositionCoordinate()
-        mapView.setCenter(coordinate, animated: withAnimation)
-    }
-    
-    private func changeAnnotationPointPosition() {
-        mapAnnotationPoint.coordinate = DataManager.shared.getLastISSPositionCoordinate()
-        if !isAnnotationPointVisible { addAnnotationPointToMap() }
-    }
-    
-    private func addAnnotationPointToMap() {
-        mapView.addAnnotation(mapAnnotationPoint)
-        isAnnotationPointVisible = true
-    }
-}
-
-
-// MARK: - Map delegate methods
-
-extension ViewController: MGLMapViewDelegate {
-    
-    func mapView(_ mapView: MGLMapView, annotationCanShowCallout annotation: MGLAnnotation) -> Bool {
-        mapAnnotationPoint.subtitle = DataManager.shared.getIssCrewString()
-        return true
-    }
-    
-    func mapView(_ mapView: MGLMapView, viewFor annotation: MGLAnnotation) -> MGLAnnotationView? {
-        return MapAnnotationView(reuseIdentifier: "ISSicon")
+        timeView.showInformation(viewModel.timeText)
+        positionView.showInformation(viewModel.positionText)
+        mapView.coordinate = viewModel.issPositionCoordinate
     }
 }

@@ -1,5 +1,5 @@
 //
-//  UserDefaultsManager.swift
+//  UserDefaultsService.swift
 //  ISS Location
 //
 //  Created by Krzysztof Lech on 20.07.2018.
@@ -12,9 +12,9 @@ struct UserDefaultsKey {
     static let issPosition = "ISS position"
 }
 
-class UserDefaultsManager {
+class UserDefaultsService {
     
-    static let shared = UserDefaultsManager()
+    static let shared = UserDefaultsService()
     
     // MARK: - Private methods
     

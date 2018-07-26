@@ -1,20 +1,20 @@
 //
-//  RequestManager.swift
+//  APIService.swift
 //  ISS Location
 //
-//  Created by Krzysztof Lech on 20.07.2018.
+//  Created by Krzysztof Lech on 25.07.2018.
 //  Copyright © 2018 Krzysztof Lech. All rights reserved.
 //
 
 import Foundation
 import Alamofire
 
-struct RequestManager {
+struct APIService {
     
-    private static let issPositionUrl = "http://api.open-notify.org/iss-now.json"
-    private static let issCrewUrl     = "http://api.open-notify.org/astros.json"
+    private let issPositionUrl = "http://api.open-notify.org/iss-now.json"
+    private let issCrewUrl     = "http://api.open-notify.org/astros.json"
     
-    static func getIssPositionData(closure: @escaping (_ data: IssPosition) -> ()) {
+    func getIssPositionData(closure: @escaping (_ data: IssPosition) -> ()) {
         guard let endPointUrl = URL(string: issPositionUrl) else {
             print("Error: Cannot create URL")
             return
@@ -34,7 +34,7 @@ struct RequestManager {
         }
     }
     
-    static func getIssCrewData(closure: @escaping (_ data: [CrewMan]) -> ()) {
+    func getIssCrewData(closure: @escaping (_ data: [CrewMan]) -> ()) {
         guard let endPointUrl = URL(string: issCrewUrl) else {
             print("Error: Cannot create URL")
             return
@@ -46,7 +46,7 @@ struct RequestManager {
                     let apiData = dataResponse.result.value as? [String : Any],
                     let crewDictionary = apiData["people"] as? [[String : String]]
                     else { return }
-
+                
                 var crewArray = [CrewMan]()
                 for item in crewDictionary {
                     if let name = item["name"] {
