@@ -20,4 +20,4 @@ For displaying the actual map on the device we would like you to use the **Mapbo
 **Project consists of two branches:**
 
 * MVC
-* MVVM - in implementation
+* MVVM
